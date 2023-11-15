@@ -38,5 +38,4 @@ sequenceDiagram
 	server-->>browser: [{ content: "test", date: "2023-11-15" }, ...]
 
 	note over browser: browser executes the event handler<br/>that renders notes to display
-
 ```
