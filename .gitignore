@@ -2,6 +2,6 @@
 **/.DS_Store
 **/.vscode
 **/object
-**/.o
-**/.a
-**/.node_modules
+**/*.o
+**/*.a
+**/node_modules
