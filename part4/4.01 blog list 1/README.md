@@ -183,7 +183,7 @@ app.use(express.json())
 module.exports = app
 ```
 
-add this line to the top of `index.js` :
+Add this line to the top of `index.js` :
 
 ``` js
 const app = require('./app')
@@ -286,4 +286,36 @@ module.exports = app
 
 The router we defined earlier is used if the URL of the request starts with `/api/components`. For this reason, the `componentsRouter` object must only define the relative parts of the routes, i.e. the empty path `/` or just the parameter `/:id`.
 
+## Setup the controllers
 
+Creat a `utils/middleware.js` module for others custom middleware:
+
+``` shell
+touch utils/middleware.js
+```
+
+Exmple of a `middleware.js` file:
+
+``` js
+const otherMiddleware = (request, response) => {
+    // ...
+}
+
+module.exports = {
+    otherMiddleware,
+}
+```
+
+Add them to the `app.js` file:
+
+``` js
+// ...
+
+const middleware = require('./utils/middleware')
+
+// ...
+
+app.use(middleware.otherMiddleware)
+
+// ...
+```

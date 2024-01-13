@@ -1,31 +1,28 @@
 const blogsRouter = require('express').Router()
-const mongoose = require('mongoose')
-
-const blogSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number,
-})
-
-const Blog = mongoose.model('Blog', blogSchema)
+const Blog = require('../models/blog')
 
 blogsRouter.get('/', (request, response) => {
     Blog
         .find({})
-        .then((blogs) => {
-            response.json(blogs)
-        })
+        .then((blogs) => { response.json(blogs) })
 })
 
-blogsRouter.post('/', (request, response) => {
-    const blog = new Blog(request.body)
+blogsRouter.post('/', (request, response, next) => {
+    const { body } = request
 
-    blog
+    const newBlog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes,
+    })
+
+    newBlog
         .save()
-        .then((result) => {
-            response.status(201).json(result)
+        .then((savedBlog) => {
+            response.status(201).json(savedBlog)
         })
+        .catch((error) => next(error))
 })
 
 module.exports = blogsRouter
