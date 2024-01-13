@@ -1,0 +1,35 @@
+{
+    "name": "3.22-phonebook-backend-22",
+    "version": "22.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "start:debug": "node --inspect index.js",
+        "dev": "nodemon index.js",
+        "dev:debug": "nodemon --inspect index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
+        "lint": "eslint ."
+    },
+    "author": "Thomas Da Silva",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "mongodb": "^6.3.0",
+        "mongoose": "^8.0.4",
+        "morgan": "^1.10.0",
+        "react": "^18.2.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.56.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-plugin-import": "^2.29.1",
+        "eslint-plugin-jsx-a11y": "^6.8.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "nodemon": "^3.0.2"
+    }
+}
