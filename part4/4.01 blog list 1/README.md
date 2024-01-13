@@ -1,24 +1,26 @@
 # Initializing a Node.js Project
 
+## Setup a `package.json` file
+
 ```
 mkdir project_name
 cd project_name
 ```
 
-#### Create a `package.json` file:
+Create a `package.json` file:
 
 ```shell
 npm init
 ```
 
-#### Install your dependencies:
+Install your dependencies:
 
 ```shell
 npm install react dotenv express morgan cors mongodb
 npm install mongoose@7.6.5
 ```
 
-#### Install your development and testing dependencies that are not used in the production version:
+Install your development and testing dependencies that are not used in the production version:
 
 ```shell
 npm install nodemon --save-dev
@@ -26,8 +28,7 @@ npm install eslint --save-dev
 npx install-peerdeps --dev eslint-config-airbnb
 ```
 
-#### Add your scripts to the `package.json` file:
-
+Add your scripts to the `package.json` file.
 Example of useful scripts:
 
 ``` json
@@ -47,7 +48,9 @@ Example of useful scripts:
 }
 ```
 
-#### Import your `.eslintrc.js` and `.eslintignore` files, or initialize a default ESlint configuration with the following command:
+## Setup ESlint
+
+Import your `.eslintrc.js` and `.eslintignore` files, or initialize a default ESlint configuration with the following command:
 
 ``` shell
 npx eslint --init
@@ -59,22 +62,20 @@ touch .eslintignore
 
 ## Setup the environment
 
-#### Create a `.env` file:
+Create a `.env` file:
 
 ```
 touch .env
 ```
 
-#### Add your variables to the `.env` file:
+Add your variables to the `.env` file:
 
 ```
 VARIABLE=value
 EXEMPLE=value
 ```
 
-#### Create a `config.js` file:
-
-The handling of environment variables is extracted into a separate utils/config.js file.
+The handling of environment variables is extracted into a separate utils/config.js file. Create a `config.js` file:
 
 ``` shell
 mkdir utils
