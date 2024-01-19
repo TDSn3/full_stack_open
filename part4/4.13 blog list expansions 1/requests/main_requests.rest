@@ -1,0 +1,18 @@
+
+GET http://localhost:3003/api/blogs
+
+###
+
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+	"title": "Perou",
+	"author": "Clément",
+	"url": "www.Clement-Perou.com",
+	"likes": 33
+}
+
+###
+
+DELETE http://localhost:3003/api/blogs/65aa3fde50a91fe177348b5d
