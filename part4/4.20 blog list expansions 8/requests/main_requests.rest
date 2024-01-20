@@ -17,7 +17,7 @@ Authorization: Bearer <token>
 
 ###
 
-DELETE http://localhost:3003/api/blogs/65ac09437bec9034b10d6c30
+DELETE http://localhost:3003/api/blogs/65ac100d7da1b95fa9fefc1f
 
 
 
