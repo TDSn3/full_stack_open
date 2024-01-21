@@ -4,6 +4,7 @@ const app = require('../app')
 const Blog = require('../models/blog')
 const helperBlog = require('./blog_test_helper')
 const helperUser = require('./user_test_helper')
+const helperLogin = require('./login_test_helper')
 
 const api = supertest(app)
 
@@ -47,8 +48,10 @@ describe('Blog tests', () => {
                 userId: users[0].id,
             }
 
+            const token = helperLogin.creatToken(users[0])
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog)
                 .expect(201)
                 .expect('Content-Type', /application\/json/)
@@ -71,8 +74,10 @@ describe('Blog tests', () => {
                 userId: users[0].id,
             }
 
+            const token = helperLogin.creatToken(users[0])
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog)
                 .expect(201)
                 .expect('Content-Type', /application\/json/)
@@ -100,15 +105,42 @@ describe('Blog tests', () => {
                 userId: users[0].id,
             }
 
+            const token = helperLogin.creatToken(users[0])
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog1)
                 .expect(400)
 
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog2)
                 .expect(400)
+
+            const blogsAtEnd = await helperBlog.blogsInDb()
+
+            expect(blogsAtEnd).toHaveLength(helperBlog.initialBlogs.length)
+        })
+        test('bad token dont creat a new blog', async () => {
+            const users = await helperUser.usersInDb()
+
+            const newBlog1 = {
+                author: 'Leona',
+                url: 'test.com',
+                userId: users[0].id,
+            }
+
+            await api
+                .post('/api/blogs')
+                .set('Authorization', 'Bearer 1234')
+                .send(newBlog1)
+                .expect(401)
+
+            await api
+                .post('/api/blogs')
+                .send(newBlog1)
+                .expect(401)
 
             const blogsAtEnd = await helperBlog.blogsInDb()
 
@@ -127,8 +159,10 @@ describe('Blog tests', () => {
                 userId: users[0].id,
             }
 
+            const token = helperLogin.creatToken(users[0])
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog)
                 .expect(201)
 
@@ -137,6 +171,7 @@ describe('Blog tests', () => {
 
             await api
                 .delete(`/api/blogs/${blogsAtStart[blogsAtStart.length - 1].id}`)
+                .set('Authorization', `Bearer ${token}`)
                 .expect(204)
 
             const blogsAtEnd = await helperBlog.blogsInDb()
@@ -158,8 +193,10 @@ describe('Blog tests', () => {
                 userId: users[0].id,
             }
 
+            const token = helperLogin.creatToken(users[0])
             await api
                 .post('/api/blogs')
+                .set('Authorization', `Bearer ${token}`)
                 .send(newBlog)
                 .expect(201)
 
