@@ -1,5 +1,4 @@
 const blogsRouter = require('express').Router()
-const jwt = require('jsonwebtoken')
 const Blog = require('../models/blog')
 const User = require('../models/user')
 
@@ -13,11 +12,7 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
     const { body } = request
-    const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
-    if (!decodedToken.id) {
-        return (response.status(401).json({ error: 'token invalid' }))
-    }
     if (!body.userId) {
         return (response.status(400).json({ error: 'userId is required' }))
     }
@@ -27,12 +22,11 @@ blogsRouter.post('/', async (request, response) => {
         return (response.status(400).json({ error: 'userId invalid' }))
     }
 
-    const user = await User.findById(decodedToken.id)
-    if (!user) {
+    if (!request.use) {
         return (response.status(400).json({ error: 'user not found' }))
     }
 
-    if (decodedToken.id !== body.userId) {
+    if (request.user.id !== body.userId) {
         return (response.status(401).json({ error: 'userId and token do not match' }))
     }
 
@@ -41,12 +35,12 @@ blogsRouter.post('/', async (request, response) => {
         author: body.author,
         url: body.url,
         likes: body.likes,
-        user: user.id,
+        user: request.user.id,
     })
 
     const savedBlog = await newBlog.save()
-    user.blogs = user.blogs.concat(savedBlog.id)
-    await user.save()
+    request.user.blogs = request.user.blogs.concat(savedBlog.id)
+    await request.user.save()
 
     return (response.status(201).json(savedBlog))
 })
@@ -59,26 +53,22 @@ blogsRouter.put('/:id', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-    const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    if (!decodedToken.id) {
-        return (response.status(401).json({ error: 'token invalid' }))
-    }
-
     const blog = await Blog.findById(request.params.id)
     if (!blog) {
         return (response.status(400).json({ error: 'blog not found' }))
     }
-    if (decodedToken.id !== blog.user.toString()) {
+    if (request.user.id !== blog.user.toString()) {
         return (response.status(401).json({ error: 'blog user and token do not match' }))
     }
 
-    const user = await User.findById(blog.user)
-    if (!user) {
+    if (!request.user) {
         return (response.status(400).json({ error: 'user not found' }))
     }
 
-    user.blogs = user.blogs.filter((userValue) => userValue.toString() !== request.params.id)
-    await user.save()
+    request.user.blogs = request.user.blogs.filter(
+        (userValue) => userValue.toString() !== request.params.id,
+    )
+    await request.user.save()
     await Blog.findByIdAndDelete(request.params.id)
 
     return (response.status(204).end())
