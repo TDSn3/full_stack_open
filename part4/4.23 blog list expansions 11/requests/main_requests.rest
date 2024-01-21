@@ -5,7 +5,7 @@ GET http://localhost:3003/api/blogs
 
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QzIiwiaWQiOiI2NWFjY2UyNzBkMGQ4NDA2ZDg2MjdmOTciLCJpYXQiOjE3MDU4MjM4MjksImV4cCI6MTcwNTkxMDIyOX0.Ly7NdnR5X2S8IDh6NUFc7IXE7B68FwZ9BqYyd0fOmaY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QzIiwiaWQiOiI2NWFjY2UyNzBkMGQ4NDA2ZDg2MjdmOTciLCJpYXQiOjE3MDU4MzE3NzUsImV4cCI6MTcwNTkxODE3NX0.PacJNrLWfhd8V3fO7LYtHEGjF-iyy7sXYwqJb55kSis
 
 {
 	"title": "Perou",
@@ -17,7 +17,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc
 
 ###
 
-DELETE http://localhost:3003/api/blogs/65acea9ee4d3122f96a4becb
+DELETE http://localhost:3003/api/blogs/65acee1fcb0be421849dd8e4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QzIiwiaWQiOiI2NWFjY2UyNzBkMGQ4NDA2ZDg2MjdmOTciLCJpYXQiOjE3MDU4MjM4MjksImV4cCI6MTcwNTkxMDIyOX0.Ly7NdnR5X2S8IDh6NUFc7IXE7B68FwZ9BqYyd0fOmaY
 
 
