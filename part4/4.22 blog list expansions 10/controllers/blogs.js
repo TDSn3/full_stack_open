@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog
@@ -10,7 +11,7 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs)
 })
 
-blogsRouter.post('/', async (request, response) => {
+blogsRouter.post('/', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
     const { body } = request
 
     if (!body.userId) {
@@ -22,7 +23,7 @@ blogsRouter.post('/', async (request, response) => {
         return (response.status(400).json({ error: 'userId invalid' }))
     }
 
-    if (!request.use) {
+    if (!request.user) {
         return (response.status(400).json({ error: 'user not found' }))
     }
 
@@ -52,7 +53,7 @@ blogsRouter.put('/:id', async (request, response) => {
     response.json(updatedBlog)
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
+blogsRouter.delete('/:id', middleware.tokenExtractor, middleware.userExtractor, async (request, response) => {
     const blog = await Blog.findById(request.params.id)
     if (!blog) {
         return (response.status(400).json({ error: 'blog not found' }))
