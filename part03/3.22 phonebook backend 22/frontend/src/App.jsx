@@ -7,7 +7,6 @@ import personService from './services/person.jsx';
 
 const App = () =>
 {
-
     const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newPhoneNum, setNewPhoneNum] = useState('')
