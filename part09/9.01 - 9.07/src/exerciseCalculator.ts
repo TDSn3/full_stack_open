@@ -44,21 +44,21 @@ const calculateExercises = (dailyExerciseHours: number[], targetAmount: number):
     return (result);
 };
 
-if (process.argv.length < 4) {
-	throw new Error('Missing parameters');
-}
+// if (process.argv.length < 4) {
+// 	throw new Error('Missing parameters');
+// }
 
-const targetAmountValue = Number(process.argv[2]);
-const dailyExerciseHoursValue = process.argv.slice(3).map(Number);
+// const targetAmountValue = Number(process.argv[2]);
+// const dailyExerciseHoursValue = process.argv.slice(3).map(Number);
 
-const result = calculateExercises(dailyExerciseHoursValue, targetAmountValue);
+// const result = calculateExercises(dailyExerciseHoursValue, targetAmountValue);
 
-console.log('periodLength: ', result.periodLength);
-console.log('trainingDays: ', result.trainingDays);
-console.log('success: ', result.success);
-console.log('rating: ', result.rating);
-console.log('ratingDescription: ', result.ratingDescription);
-console.log('target: ', result.target);
-console.log('average: ', result.average);
+// console.log('periodLength: ', result.periodLength);
+// console.log('trainingDays: ', result.trainingDays);
+// console.log('success: ', result.success);
+// console.log('rating: ', result.rating);
+// console.log('ratingDescription: ', result.ratingDescription);
+// console.log('target: ', result.target);
+// console.log('average: ', result.average);
 
 export default calculateExercises;
