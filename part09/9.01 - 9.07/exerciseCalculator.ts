@@ -1,6 +1,3 @@
-const dailyExerciseHoursValue = [3, 0, 2, 4.5, 0, 3, 1]
-const targetAmountValue = 2
-
 interface Result {
     periodLength: number,
     trainingDays: number,
@@ -46,6 +43,13 @@ const calculateExercises = (dailyExerciseHours: number[], targetAmount: number):
 
     return (result)
 }
+
+if (process.argv.length < 4) {
+	throw new Error('Missing parameters')
+}
+
+const targetAmountValue = Number(process.argv[2])
+const dailyExerciseHoursValue = process.argv.slice(3).map(Number)
 
 const result = calculateExercises(dailyExerciseHoursValue, targetAmountValue)
 
