@@ -12,10 +12,10 @@ const calculateBmi = (height: number, mass: number): string => {
 	}
 }
 
-if (!process.argv[2] || !process.argv[3]) {
-	throw new Error('Missing parameters')
-}
+// if (!process.argv[2] || !process.argv[3]) {
+// 	throw new Error('Missing parameters')
+// }
 
-console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])))
+// console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])))
 
 export default calculateBmi
