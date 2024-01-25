@@ -5,6 +5,12 @@ interface PartProps {
     coursePart: CoursePart,
 }
 
+const assertNever = (value: never): never => {
+    throw new Error(
+        `Unhandled discriminated union member: ${JSON.stringify(value)}`
+    );
+};
+
 const Part = (props: PartProps) => {
     const part = () => {
         switch (props.coursePart.kind) {
@@ -39,7 +45,7 @@ const Part = (props: PartProps) => {
                     </>
                 );
             default:
-                break;
+                return (assertNever(props.coursePart));
         }
     }
 
