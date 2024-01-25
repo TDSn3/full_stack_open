@@ -1,17 +1,16 @@
-import { Part } from '../utils/types';
+import { CoursePart } from '../utils/types';
+import Part from './Part';
 import { v1 as uuid } from 'uuid';
 
 interface ContentProps {
-	courseParts: Part[],
+	courseParts: CoursePart[],
 }
 
 const Content = (props: ContentProps) => {
 	return (<>
 		{
-			props.courseParts.map((value, index) => (
-				<p key={uuid()}>
-					{value.name} {index}
-				</p>
+			props.courseParts.map((value) => (
+				<Part key={uuid()} coursePart={value} />
 			))
 		}
 	</>);
