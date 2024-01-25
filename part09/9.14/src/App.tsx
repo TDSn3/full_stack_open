@@ -1,6 +1,11 @@
+import { CourseName, Part } from './utils/types'
+import Content from './components/Content'
+import Header from './components/Header'
+import Total from './components/Total'
+
 const App = () => {
-  const courseName = "Half Stack application development";
-  const courseParts = [
+  const courseNameValue: CourseName = { name: "Half Stack application development" };
+  const courseParts: Part[] = [
     {
       name: "Fundamentals",
       exerciseCount: 10
@@ -16,22 +21,12 @@ const App = () => {
   ];
 
   const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0);
-
+ 
   return (
     <div>
-      <h1>{courseName}</h1>
-      <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
-      </p>
-      <p>
-        Number of exercises {totalExercises}
-      </p>
+      <Header name={courseNameValue.name} />
+      <Content courseParts={courseParts} />
+      <Total totalExercises={totalExercises} />
     </div>
   );
 };
