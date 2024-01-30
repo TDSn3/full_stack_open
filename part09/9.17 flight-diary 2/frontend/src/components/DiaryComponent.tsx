@@ -1,4 +1,4 @@
-import { Diary } from './types';
+import { Diary } from '../types';
 
 interface DiaryComponentProps {
 	diary: Diary,
