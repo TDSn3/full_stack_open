@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Diary, NewDiary } from './types';
 import DiaryComponent from './components/DiaryComponent';
 import DiaryForm from './components/DiaryForm';
+import Notification from './components/Notification';
 import { getAllDiaries, addNewDiary } from './diaryService';
 
 const App = () => {
@@ -10,6 +12,8 @@ const App = () => {
   const [newVisibility, setNewVisibility] = useState<string>('');
   const [newWeather, setNewWeather] = useState<string>('');
   const [newComment, setNewComment] = useState<string>('');
+  const [notificationMessage, setNotificationMessage] = useState<string>('');
+  const [notificationMessageClassName, setNotificationMessageClassName] = useState<string>('');
 
   const handleNewDateOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewDate(event.target.value);
   const handleNewVisibilityOnChange = (event: React.ChangeEvent<HTMLInputElement>) => setNewVisibility(event.target.value);
@@ -26,11 +30,30 @@ const App = () => {
       comment: newComment,      
     }
 
-    addNewDiary(diaryToAdd).then((data) => {
-      setDiaries(diaries.concat(data))
-    })
+    addNewDiary(diaryToAdd)
+      .then((data) => {
+        setDiaries(diaries.concat(data))
+      })
+      .catch( (error) => {
+        if (axios.isAxiosError(error)) {
+          console.log(`error.status: ${error.status}`);
+          console.error(`error.response: ${error.response}`);
 
-    setNewDate('');
+          setNotificationMessage(`${error.response?.data}`)
+        } else {
+          console.log(`error: ${error}`);
+          
+          setNotificationMessage('error')
+        }
+
+        setNotificationMessageClassName('error')
+        setTimeout( () => {
+            setNotificationMessage('')
+            setNotificationMessageClassName('')
+        }, 5000)
+      })
+
+      setNewDate('');
     setNewVisibility('');
     setNewWeather('');
     setNewComment('');
@@ -44,6 +67,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notificationMessage} messageClassName={notificationMessageClassName} />
       <DiaryForm
         handleAddDiary={handleAddDiary}
         newDate={newDate}

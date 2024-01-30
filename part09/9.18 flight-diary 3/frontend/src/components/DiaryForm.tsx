@@ -1,6 +1,6 @@
 
 
-interface DiaryForm {
+interface DiaryFormProps {
 	handleAddDiary: (event: React.SyntheticEvent) => void,
 
 	newDate: string,
@@ -16,7 +16,7 @@ interface DiaryForm {
 	handleNewCommentOnChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-const DiaryForm = (props: DiaryForm) =>
+const DiaryForm = (props: DiaryFormProps) =>
 {	
 	return (
 			<form onSubmit={props.handleAddDiary}>
