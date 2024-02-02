@@ -1,17 +1,17 @@
 import express from 'express';
-import PatienServices from '../services/patientsServices';
+import PatientServices from '../services/patientsServices';
 import { NewPatient, Patient } from '../utils/types';
 
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.json(PatienServices.getPatientNonSensitiveEntries());
+  res.json(PatientServices.getPatientNonSensitiveEntries());
 });
 
 router.post('/', (req, res) => {
   try {
-    const patientToAdd: NewPatient = PatienServices.toNewPatient(req.body);
-    const newPatient: Patient = PatienServices.addPatient(patientToAdd);
+    const patientToAdd: NewPatient = PatientServices.toNewPatient(req.body);
+    const newPatient: Patient = PatientServices.addPatient(patientToAdd);
 
     res.json(newPatient);
   } catch (error: unknown) {
@@ -23,6 +23,10 @@ router.post('/', (req, res) => {
 
     res.status(400).send(errorMessage);
   }
+});
+
+router.get('/:id', (req, res) => {
+  res.json(PatientServices.findById(req.params.id));
 });
 
 export default router;
