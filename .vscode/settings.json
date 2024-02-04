@@ -1,0 +1,19 @@
+{
+    "eslint.workingDirectories": [
+        "part09/9.10 patientor backend 3/backend",
+        "part09/9.11 patientor backend 4/backend",
+        "part09/9.14",
+        "part09/9.18 flight-diary 3/frontend",
+        "part09/9.18 flight-diary 3/backend",
+        "part09/9.20 patientor 1/frontend",
+        "part09/9.20 patientor 1/backend",
+        "part09/9.21 patientor 2/frontend",
+        "part09/9.21 patientor 2/backend",
+        "part09/9.22 patientor 3/frontend",
+        "part09/9.22 patientor 3/backend",
+        "part09/9.23 patientor 4/frontend",
+        "part09/9.23 patientor 4/backend",
+        "part09/9.24 patientor 5/frontend",
+        "part09/9.24 patientor 5/backend"
+    ]
+}
