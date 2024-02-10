@@ -1,4 +1,4 @@
-import { NewPatient, Patient, PatientNonSensitiveEntries, Gender, Entry } from '../utils/types';
+import { NewPatient, Patient, PatientNonSensitiveEntries, Gender, Entry, Diagnosis, EntryWithoutId, HealthCheckRating, SickLeaveOccupationalHealthcareEntry, DischargeHospitalEntry } from '../utils/types';
 import patientsData from '../data/patients';
 import { v1 as uuid } from 'uuid';
 
@@ -175,10 +175,94 @@ const toNewPatient = (reqBody: unknown): NewPatient => {
     throw new Error('Incorrect data: some fields are missing');
 };
 
+const parseDiagnosisCodes = (object: unknown): Array<Diagnosis['code']> =>  {
+    if (!object || typeof object !== 'object' || !('diagnosisCodes' in object)) {
+      // we will just trust the data to be in correct form
+      return [] as Array<Diagnosis['code']>;
+    }
+  
+    return object.diagnosisCodes as Array<Diagnosis['code']>;
+};
+
+const addPatientEntry = ( patient: Patient, data: EntryWithoutId ): Entry => {    
+    const newEntry: Entry = {
+        id: uuid(),
+        ...data,
+    };
+
+    patient.entries.push(newEntry);
+
+    return (newEntry);
+};
+
+const entryWithoutIdTypeGuard = (object: unknown): EntryWithoutId => {
+    if ( !object || typeof object !== 'object' ) {
+        throw new Error('Incorrect or missing data');
+    }
+
+    if ('description' in object
+        && 'date' in object
+        && 'specialist' in object)
+    {        
+        let diagnosisCodes: Array<Diagnosis['code']>;
+        if ('diagnosisCodes' in object) {
+            diagnosisCodes = object.diagnosisCodes as Array<Diagnosis['code']>;
+        } else {
+            diagnosisCodes = [];
+        }
+        if ('type' in object
+            && 'healthCheckRating' in object) {
+            const entry: EntryWithoutId = {
+                description: parseString(object.description),
+                date: parseString(object.date),
+                specialist: parseString(object.specialist),
+                diagnosisCodes: diagnosisCodes,
+                type: "HealthCheck",
+                healthCheckRating: object.healthCheckRating as HealthCheckRating,
+            };
+                
+            return (entry);
+        } else if ('type' in object
+            && 'employerName' in object) {
+            const entry: EntryWithoutId = {
+                description: parseString(object.description),
+                date: parseString(object.date),
+                specialist: parseString(object.specialist),
+                diagnosisCodes: diagnosisCodes,
+                type: "OccupationalHealthcare",
+                employerName: parseString(object.employerName),
+            };
+
+            if ('sickLeave' in object) {
+                entry.sickLeave = object.sickLeave as SickLeaveOccupationalHealthcareEntry;
+            }
+                
+            return (entry);
+        } else if ('type' in object
+        && 'discharge' in object) {
+            const entry: EntryWithoutId = {
+                description: parseString(object.description),
+                date: parseString(object.date),
+                specialist: parseString(object.specialist),
+                diagnosisCodes: diagnosisCodes,
+                type: "Hospital",
+                discharge: object.discharge as DischargeHospitalEntry,
+            };
+                
+            return (entry);
+        }
+    }
+
+    throw new Error('Incorrect data: a field missing');
+};
+
 export default {
     getPatients,
     getPatientNonSensitiveEntries,
     findById,
     addPatient,
     toNewPatient,
+    parseDiagnosisCodes,
+    addPatientEntry,
+    entryWithoutIdTypeGuard,
 };
