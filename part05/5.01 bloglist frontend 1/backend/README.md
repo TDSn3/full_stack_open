@@ -17,7 +17,7 @@ NODE_ENV=""
 SECRET=<string>
 ```
 
-exemple :
+example :
 
 ```
 DATABASE_USERNAME=fullstack

@@ -1,5 +1,8 @@
 {
     "eslint.workingDirectories": [
+        "part05/5.01 bloglist frontend 1/backend",
+        "part05/5.01 bloglist frontend 1/frontend",
+
         "part09/9.10 patientor backend 3/backend",
         "part09/9.11 patientor backend 4/backend",
         "part09/9.14",
@@ -18,6 +21,8 @@
         "part09/9.25 patientor 6/frontend",
         "part09/9.25 patientor 6/backend",
         "part09/9.26 patientor 7/frontend",
-        "part09/9.26 patientor 7/backend"
+        "part09/9.26 patientor 7/backend",
+        "part09/9.27 patientor 8/frontend",
+        "part09/9.27 patientor 8/backend"
     ]
 }
