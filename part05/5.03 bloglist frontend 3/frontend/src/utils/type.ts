@@ -8,4 +8,5 @@ export interface LoginToken {
   name: string,
   token: string,
   username: string,
+  userId: string,
 }
