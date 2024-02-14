@@ -3,3 +3,9 @@ export interface BlogType {
   title: string,
   author: string,
 }
+
+export interface LoginToken {
+  name: string,
+  token: string,
+  username: string,
+}
