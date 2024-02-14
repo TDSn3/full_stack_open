@@ -1,0 +1,42 @@
+e
+h2 {
+    color: black;
+    font-family: Helvetica, sans-serif;
+}
+
+p {
+    color: rgb(128, 128, 150);
+    font-family: Helvetica, sans-serif;
+}
+
+.error {
+    font-size: 16px;
+    font-family: Helvetica, sans-serif;
+    color: #d64040;
+
+    background: #fff7f7;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: #ffe6e6;
+
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.validation {
+    font-size: 16px;
+    font-family: Helvetica, sans-serif;
+    color: #009966;
+
+    background: #f2fffb;
+
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: #d4f3e9;
+
+    padding: 10px;
+    margin-bottom: 10px;  
+}
