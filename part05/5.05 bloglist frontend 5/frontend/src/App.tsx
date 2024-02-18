@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Divider } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -88,10 +88,15 @@ function App() {
     setUserId('');
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const blogFormRef = useRef<any>();
+
   const handleAddBlog = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     try {
+      blogFormRef.current.toggleVisibility();
+
       const newObject = {
         title,
         author,
@@ -147,7 +152,7 @@ function App() {
             <button className="cta-style" onClick={handleClick} type="button">logout</button>
             <Notification message={notificationMessage} messageClassName={notificationClassName} />
             <Divider style={{ marginTop: '16px' }} />
-            <ToggleLogin buttonLabel="new blog">
+            <ToggleLogin buttonLabel="new blog" ref={blogFormRef}>
               <AddBlogForm
                 title={title}
                 setTitle={setTitle}

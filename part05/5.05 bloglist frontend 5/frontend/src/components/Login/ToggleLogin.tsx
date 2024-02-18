@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 
 interface ToggleLoginProps {
   buttonLabel: string,
   children: React.ReactNode,
 }
 
-function ToggleLogin({ buttonLabel, children }: ToggleLoginProps) {
+const ToggleLogin = forwardRef(({ buttonLabel, children }: ToggleLoginProps, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const hideWhenVisible = { display: (visible ? 'none' : '') };
@@ -14,6 +14,10 @@ function ToggleLogin({ buttonLabel, children }: ToggleLoginProps) {
   const toggleVisibility = () => {
     setVisible(!visible);
   };
+
+  useImperativeHandle(ref, () => ({
+    toggleVisibility,
+  }));
 
   return (
     <div>
@@ -26,6 +30,6 @@ function ToggleLogin({ buttonLabel, children }: ToggleLoginProps) {
       </div>
     </div>
   );
-}
+});
 
 export default ToggleLogin;
