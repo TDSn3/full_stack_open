@@ -14,4 +14,16 @@ const login = async (credentials: Credentials): Promise<LoginToken> => {
   return (response.data);
 };
 
-export default { login };
+const verifyToken = async (token: string): Promise<number> => {
+  const cleanedToken = token.replace(/^"|"$/g, '');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${cleanedToken}`,
+    },
+  };
+  const response = await axios.get(`${baseUrl}/token`, config);
+
+  return (response.status);
+};
+
+export default { login, verifyToken };

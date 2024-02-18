@@ -3,7 +3,8 @@ import { Divider } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 
 import Blog from './components/Blog';
-import Login from './components/Login';
+import ToggleLogin from './components/Login/ToggleLogin';
+import Login from './components/Login/Login';
 import Notification from './components/Notification';
 import AddBlogForm from './components/AddBlogForm';
 
@@ -37,9 +38,13 @@ function App() {
 
     if (loggedUserJSON && loggedUserJSON !== '') {
       const userToken = JSON.parse(loggedUserJSON);
-
-      setUser(userToken);
-      blogService.setToken(userToken);
+      loginService.verifyToken(loggedUserJSON)
+        .then((value) => {
+          if (value === 200) {
+            setUser(userToken);
+            blogService.setToken(userToken);
+          }
+        });
     }
     if (userIdJSON && userIdJSON !== '') {
       const userIdToken = JSON.parse(userIdJSON);
@@ -142,15 +147,17 @@ function App() {
             <button className="cta-style" onClick={handleClick} type="button">logout</button>
             <Notification message={notificationMessage} messageClassName={notificationClassName} />
             <Divider style={{ marginTop: '16px' }} />
-            <AddBlogForm
-              title={title}
-              setTitle={setTitle}
-              author={author}
-              setAuthor={setAuthor}
-              url={url}
-              setUrl={setUrl}
-              handleAddBlog={handleAddBlog}
-            />
+            <ToggleLogin buttonLabel="new blog">
+              <AddBlogForm
+                title={title}
+                setTitle={setTitle}
+                author={author}
+                setAuthor={setAuthor}
+                url={url}
+                setUrl={setUrl}
+                handleAddBlog={handleAddBlog}
+              />
+            </ToggleLogin>
             <h2>blogs</h2>
             {blogs.map((blogValue: BlogType) => <Blog key={blogValue.id} blog={blogValue} />)}
           </>
