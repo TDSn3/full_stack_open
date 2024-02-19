@@ -43,7 +43,11 @@ blogsRouter.post('/', middleware.tokenExtractor, middleware.userExtractor, async
     request.user.blogs = request.user.blogs.concat(savedBlog.id)
     await request.user.save()
 
-    return (response.status(201).json(savedBlog))
+    const blogWithUser = await Blog.findById(savedBlog._id)
+        .populate('user', '-passwordHash')
+        .exec()
+
+    return (response.status(201).json(blogWithUser))
 })
 
 blogsRouter.put('/:id', async (request, response) => {

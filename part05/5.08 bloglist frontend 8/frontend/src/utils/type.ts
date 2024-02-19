@@ -1,10 +1,15 @@
+interface User {
+  username: string,
+  name: string,
+}
+
 export interface BlogType {
   id: string,
   title: string,
   author: string,
   url: string,
   likes: number,
-  user: string,
+  user: User,
 }
 
 export interface LoginToken {

@@ -55,6 +55,7 @@ function AddBlogForm({
         user: response.user,
       };
 
+      console.log('response: ', newObject);
       const blogUpdate: BlogType[] = [...blogs, newBlog];
       setBlogs(blogUpdate);
 

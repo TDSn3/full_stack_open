@@ -44,6 +44,12 @@ const ToggleBlog = forwardRef(({ buttonLabel, blog }: ToggleBlogProps, ref) => {
         {' '}
         {blog.likes}
         <br />
+        username:
+        {' '}
+        {blog.user.username}
+        {' | name :'}
+        {blog.user.name}
+        <br />
         <button type="button" onClick={toggleVisibility}>hide</button>
         <Divider />
       </div>
