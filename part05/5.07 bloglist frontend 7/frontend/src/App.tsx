@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Divider } from '@mui/material';
 
-import Blog from './components/Blog';
-import ToggleLogin from './components/Login/ToggleLogin';
-import Login from './components/Login/Login';
+import ToggleBlog from './components/ToggleBlog';
+import ToggleBlogForm from './components/AddBlogForm/ToggleBlogForm';
+import Login from './components/Login';
 import Notification from './components/Notification';
-import AddBlogForm from './components/AddBlogForm';
+import AddBlogForm from './components/AddBlogForm/AddBlogForm';
 
 import blogService from './services/blog';
 import loginService from './services/login';
@@ -85,6 +85,8 @@ function App() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blogFormRef = useRef<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const blogRef = useRef<any>();
 
   return (
     <div className="App">
@@ -105,7 +107,7 @@ function App() {
             <button className="cta-style" onClick={handleClick} type="button">logout</button>
             <Notification message={notificationMessage} messageClassName={notificationClassName} />
             <Divider style={{ marginTop: '16px' }} />
-            <ToggleLogin buttonLabel="new blog" ref={blogFormRef}>
+            <ToggleBlogForm buttonLabel="new blog" ref={blogFormRef}>
               <AddBlogForm
                 blogFormRef={blogFormRef}
                 userId={userId}
@@ -114,9 +116,11 @@ function App() {
                 setNotificationMessage={setNotificationMessage}
                 setNotificationClassName={setNotificationClassName}
               />
-            </ToggleLogin>
+            </ToggleBlogForm>
             <h2>blogs</h2>
-            {blogs.map((blogValue: BlogType) => <Blog key={blogValue.id} blog={blogValue} />)}
+            {blogs.map((blogValue: BlogType) => (
+              <ToggleBlog key={blogValue.id} buttonLabel="show" blog={blogValue} ref={blogRef} />
+            ))}
           </>
         )
       }

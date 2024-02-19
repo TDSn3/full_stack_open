@@ -1,11 +1,11 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
 
-interface ToggleLoginProps {
+interface ToggleBlogFormProps {
   buttonLabel: string,
   children: React.ReactNode,
 }
 
-const ToggleLogin = forwardRef(({ buttonLabel, children }: ToggleLoginProps, ref) => {
+const ToggleBlogForm = forwardRef(({ buttonLabel, children }: ToggleBlogFormProps, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const hideWhenVisible = { display: (visible ? 'none' : '') };
@@ -32,4 +32,4 @@ const ToggleLogin = forwardRef(({ buttonLabel, children }: ToggleLoginProps, ref
   );
 });
 
-export default ToggleLogin;
+export default ToggleBlogForm;

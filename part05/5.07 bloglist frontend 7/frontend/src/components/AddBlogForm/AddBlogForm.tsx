@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Divider } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 
-import blogService from '../services/blog';
+import blogService from '../../services/blog';
 
-import { BlogType } from '../utils/type';
+import { BlogType } from '../../utils/type';
 
 interface AddBlogFormProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -50,6 +50,9 @@ function AddBlogForm({
         id: uuidv4(),
         title: response.title,
         author: response.author,
+        url: response.url,
+        likes: response.likes,
+        user: response.user,
       };
 
       const blogUpdate: BlogType[] = [...blogs, newBlog];
