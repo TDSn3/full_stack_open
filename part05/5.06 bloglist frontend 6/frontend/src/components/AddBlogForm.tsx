@@ -1,25 +1,75 @@
+import { useState } from 'react';
 import { Divider } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
+
+import blogService from '../services/blog';
+
+import { BlogType } from '../utils/type';
 
 interface AddBlogFormProps {
-  title: string,
-  setTitle: React.Dispatch<React.SetStateAction<string>>,
-  author: string,
-  setAuthor: React.Dispatch<React.SetStateAction<string>>,
-  url: string,
-  setUrl: React.Dispatch<React.SetStateAction<string>>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  blogFormRef: React.MutableRefObject<any>,
 
-  handleAddBlog: (event: { preventDefault: () => void }) => void,
+  userId: string,
+  blogs: BlogType[],
+  setBlogs: React.Dispatch<React.SetStateAction<BlogType[]>>,
+  setNotificationMessage: React.Dispatch<React.SetStateAction<string>>,
+  setNotificationClassName: React.Dispatch<React.SetStateAction<string>>,
 }
 
 function AddBlogForm({
-  title,
-  setTitle,
-  author,
-  setAuthor,
-  url,
-  setUrl,
-  handleAddBlog,
+  blogFormRef,
+  userId,
+  blogs,
+  setBlogs,
+  setNotificationMessage,
+  setNotificationClassName,
 }: AddBlogFormProps) {
+  const [title, setTitle] = useState<string>('');
+  const [author, setAuthor] = useState<string>('');
+  const [url, setUrl] = useState<string>('');
+
+  const handleAddBlog = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
+    try {
+      blogFormRef.current.toggleVisibility();
+
+      const newObject = {
+        title,
+        author,
+        url,
+        likes: 0,
+        userId,
+      };
+
+      console.log(newObject);
+      const response = await blogService.addNew(newObject);
+
+      const newBlog: BlogType = {
+        id: uuidv4(),
+        title: response.title,
+        author: response.author,
+      };
+
+      const blogUpdate: BlogType[] = [...blogs, newBlog];
+      setBlogs(blogUpdate);
+
+      setNotificationMessage('Blog added');
+      setNotificationClassName('validation');
+      setTimeout(() => {
+        setNotificationMessage('');
+        setNotificationClassName('');
+      }, 5000);
+    } catch (exception) {
+      setNotificationMessage('Impossible to add a new blog');
+      setNotificationClassName('error');
+      setTimeout(() => {
+        setNotificationMessage('');
+        setNotificationClassName('');
+      }, 5000);
+    }
+  };
   return (
     <div>
       <h2>Create new blog</h2>

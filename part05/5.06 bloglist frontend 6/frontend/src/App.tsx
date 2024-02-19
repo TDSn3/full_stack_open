@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { Divider } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
 
 import Blog from './components/Blog';
 import ToggleLogin from './components/Login/ToggleLogin';
@@ -21,10 +20,6 @@ function App() {
   const [notificationMessage, setNotificationMessage] = useState<string>('');
   const [notificationClassName, setNotificationClassName] = useState<string>('');
   const [user, setUser] = useState<string>('');
-
-  const [title, setTitle] = useState<string>('');
-  const [author, setAuthor] = useState<string>('');
-  const [url, setUrl] = useState<string>('');
 
   const hook = () => {
     blogService
@@ -91,48 +86,6 @@ function App() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blogFormRef = useRef<any>();
 
-  const handleAddBlog = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-
-    try {
-      blogFormRef.current.toggleVisibility();
-
-      const newObject = {
-        title,
-        author,
-        url,
-        likes: 0,
-        userId,
-      };
-
-      console.log(newObject);
-      const response = await blogService.addNew(newObject);
-
-      const newBlog: BlogType = {
-        id: uuidv4(),
-        title: response.title,
-        author: response.author,
-      };
-
-      const blogUpdate: BlogType[] = [...blogs, newBlog];
-      setBlogs(blogUpdate);
-
-      setNotificationMessage('Blog added');
-      setNotificationClassName('validation');
-      setTimeout(() => {
-        setNotificationMessage('');
-        setNotificationClassName('');
-      }, 5000);
-    } catch (exception) {
-      setNotificationMessage('Impossible to add a new blog');
-      setNotificationClassName('error');
-      setTimeout(() => {
-        setNotificationMessage('');
-        setNotificationClassName('');
-      }, 5000);
-    }
-  };
-
   return (
     <div className="App">
       {
@@ -154,13 +107,12 @@ function App() {
             <Divider style={{ marginTop: '16px' }} />
             <ToggleLogin buttonLabel="new blog" ref={blogFormRef}>
               <AddBlogForm
-                title={title}
-                setTitle={setTitle}
-                author={author}
-                setAuthor={setAuthor}
-                url={url}
-                setUrl={setUrl}
-                handleAddBlog={handleAddBlog}
+                blogFormRef={blogFormRef}
+                userId={userId}
+                blogs={blogs}
+                setBlogs={setBlogs}
+                setNotificationMessage={setNotificationMessage}
+                setNotificationClassName={setNotificationClassName}
               />
             </ToggleLogin>
             <h2>blogs</h2>
