@@ -119,7 +119,14 @@ function App() {
             </ToggleBlogForm>
             <h2>blogs</h2>
             {blogs.map((blogValue: BlogType) => (
-              <ToggleBlog key={blogValue.id} buttonLabel="show" blog={blogValue} ref={blogRef} />
+              <ToggleBlog
+                key={blogValue.id}
+                buttonLabel="show"
+                blog={blogValue}
+                blogs={blogs}
+                setBlogs={setBlogs}
+                ref={blogRef}
+              />
             ))}
           </>
         )

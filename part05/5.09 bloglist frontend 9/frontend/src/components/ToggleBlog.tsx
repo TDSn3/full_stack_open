@@ -1,13 +1,21 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
 import { Divider } from '@mui/material';
 import { BlogType } from '../utils/type';
+import blogService from '../services/blog';
 
 interface ToggleBlogProps {
   buttonLabel: string,
   blog: BlogType,
+  blogs: BlogType[],
+  setBlogs: React.Dispatch<React.SetStateAction<BlogType[]>>,
 }
 
-const ToggleBlog = forwardRef(({ buttonLabel, blog }: ToggleBlogProps, ref) => {
+const ToggleBlog = forwardRef(({
+  buttonLabel,
+  blog,
+  blogs,
+  setBlogs,
+}: ToggleBlogProps, ref) => {
   const [visible, setVisible] = useState<boolean>(false);
 
   const hideWhenVisible = { display: (visible ? 'none' : '') };
@@ -15,6 +23,20 @@ const ToggleBlog = forwardRef(({ buttonLabel, blog }: ToggleBlogProps, ref) => {
 
   const toggleVisibility = () => {
     setVisible(!visible);
+  };
+
+  const handleLikeButton = () => {
+    const promise = blogService.likePlusOne(blog);
+
+    promise.then((_data) => {
+      const newBlogList = blogs.map((value: BlogType) => {
+        if (value.id === blog.id) {
+          return ({ ...value, likes: value.likes + 1 });
+        }
+        return (value);
+      });
+      setBlogs(newBlogList);
+    });
   };
 
   useImperativeHandle(ref, () => ({
@@ -43,6 +65,8 @@ const ToggleBlog = forwardRef(({ buttonLabel, blog }: ToggleBlogProps, ref) => {
         likes:
         {' '}
         {blog.likes}
+        {' '}
+        <button type="button" onClick={handleLikeButton}>like</button>
         <br />
         username:
         {' '}
