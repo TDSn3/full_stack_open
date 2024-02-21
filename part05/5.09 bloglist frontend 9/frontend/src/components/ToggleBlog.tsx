@@ -10,7 +10,7 @@ interface ToggleBlogProps {
   setBlogs: React.Dispatch<React.SetStateAction<BlogType[]>>,
 }
 
-const ToggleBlog = forwardRef(({
+const ToggleBwlog = forwardRef(({
   buttonLabel,
   blog,
   blogs,
