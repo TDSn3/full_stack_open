@@ -1,7 +1,7 @@
 import { useState, forwardRef, useImperativeHandle } from 'react';
-import { Divider } from '@mui/material';
-import { BlogType } from '../utils/type';
-import blogService from '../services/blog';
+import { BlogType } from '../../utils/type';
+import blogService from '../../services/blog';
+import Blog from './Blog';
 
 interface ToggleBlogProps {
   buttonLabel: string,
@@ -55,46 +55,16 @@ const ToggleBlog = forwardRef(({
   }));
 
   return (
-    <div>
-      <div style={hideWhenVisible}>
-        <Divider style={{ marginTop: '16px' }} />
-        {blog.title}
-        {' '}
-        {blog.author}
-        <button type="button" onClick={toggleVisibility}>{buttonLabel}</button>
-        <Divider />
-      </div>
-
-      <div style={showWhenVisible}>
-        <Divider style={{ marginTop: '16px' }} />
-        {blog.title}
-        {' '}
-        {blog.author}
-        <br />
-        {blog.url}
-        <br />
-        likes:
-        {' '}
-        {blog.likes}
-        {' '}
-        <button type="button" onClick={handleLikeButton}>like</button>
-        <br />
-        username:
-        {' '}
-        {blog.user.username}
-        {' | name :'}
-        {blog.user.name}
-        <br />
-        <button type="button" onClick={toggleVisibility}>hide</button>
-        <br />
-        {
-          userId === blog.user.id ? (
-            <button type="button" onClick={handleRemoveBlogButton}>remove</button>
-          ) : (<div />)
-        }
-        <Divider />
-      </div>
-    </div>
+    <Blog
+      hideWhenVisible={hideWhenVisible}
+      showWhenVisible={showWhenVisible}
+      blog={blog}
+      toggleVisibility={toggleVisibility}
+      buttonLabel={buttonLabel}
+      handleLikeButton={handleLikeButton}
+      userId={userId}
+      handleRemoveBlogButton={handleRemoveBlogButton}
+    />
   );
 });
 

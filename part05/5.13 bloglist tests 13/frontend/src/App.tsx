@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Divider } from '@mui/material';
 
-import ToggleBlog from './components/ToggleBlog';
+import ToggleBlog from './components/Blog/ToggleBlog';
 import ToggleBlogForm from './components/AddBlogForm/ToggleBlogForm';
 import Login from './components/Login';
 import Notification from './components/Notification';
