@@ -3,30 +3,40 @@ import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Blog from './Blog';
 
+// ── setup blog ── //
+
+// no visible
+let hideWhenVisible = { display: '' };
+let showWhenVisible = { display: 'none' };
+
+const blog = {
+  id: '1',
+  title: 'blog for test',
+  author: 'thomas for test',
+  url: 'http://www.test.com',
+  likes: 10,
+  user: {
+    id: '2',
+    username: 'user-for-test',
+    name: 'user for test',
+  },
+};
+
+const voidFunction = () => {};
+const mockHandler = jest.fn(() => {
+  hideWhenVisible = { display: 'none' };
+  showWhenVisible = { display: '' };
+});
+
+// ──────────────── //
+
+beforeEach(() => {
+  hideWhenVisible = { display: '' };
+  showWhenVisible = { display: 'none' };
+  mockHandler.mockClear();
+});
+
 test('renders content', async () => {
-  // no visible
-  let hideWhenVisible = { display: '' };
-  let showWhenVisible = { display: 'none' };
-
-  const blog = {
-    id: '1',
-    title: 'blog for test',
-    author: 'thomas for test',
-    url: 'http://www.test.com',
-    likes: 10,
-    user: {
-      id: '2',
-      username: 'user-for-test',
-      name: 'user for test',
-    },
-  };
-
-  const voidFunction = () => {};
-  const mockHandler = jest.fn(() => {
-    hideWhenVisible = { display: 'none' };
-    showWhenVisible = { display: '' };
-  });
-
   const { container } = render(<Blog
     hideWhenVisible={hideWhenVisible}
     showWhenVisible={showWhenVisible}
@@ -81,4 +91,24 @@ test('renders content', async () => {
   expect(divLong).not.toHaveStyle('display: none;');
   expect(divLong).toHaveTextContent(/http:\/\/www\.test\.com/);
   expect(divLong).toHaveTextContent(/likes:\s*10/);
+});
+
+test('like button', async () => {
+  render(<Blog
+    hideWhenVisible={hideWhenVisible}
+    showWhenVisible={showWhenVisible}
+    blog={blog}
+    toggleVisibility={mockHandler}
+    buttonLabel="testButton"
+    handleLikeButton={voidFunction}
+    userId="1"
+    handleRemoveBlogButton={voidFunction}
+  />);
+
+  const user = userEvent.setup();
+  const button = screen.getByText('testButton');
+  await user.click(button);
+  await user.click(button);
+
+  expect(mockHandler.mock.calls).toHaveLength(2);
 });
