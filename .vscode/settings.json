@@ -2,6 +2,7 @@
     "eslint.workingDirectories": [
         "part05/5.01 bloglist frontend 1/backend",
         "part05/5.01 bloglist frontend 1/frontend",
+        "part05/5.17 bloglist end to end tests 1/frontend",
 
         "part09/9.10 patientor backend 3/backend",
         "part09/9.11 patientor backend 4/backend",
