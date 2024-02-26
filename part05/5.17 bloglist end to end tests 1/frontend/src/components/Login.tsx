@@ -23,6 +23,7 @@ function Login({
         <div>
           <span>username </span>
           <input
+            id="username"
             type="text"
             value={username}
             name="Username"
@@ -32,13 +33,14 @@ function Login({
         <div>
           <span>password </span>
           <input
+            id="password"
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
           <br />
-          <button type="submit">Login</button>
+          <button id="login-button" type="submit">Login</button>
         </div>
         <Divider style={{ marginTop: '16px' }} />
       </form>

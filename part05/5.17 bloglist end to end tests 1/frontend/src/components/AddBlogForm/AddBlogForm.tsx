@@ -113,7 +113,7 @@ function AddBlogForm({
             />
           </label>
         </div>
-        <button type="submit">Create</button>
+        <button id="create-blog-button" type="submit">Create</button>
       </form>
       <Divider style={{ marginTop: '16px' }} />
     </div>
