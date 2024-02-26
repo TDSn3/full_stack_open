@@ -78,31 +78,40 @@ function AddBlogForm({
       <h2>Create new blog</h2>
       <form onSubmit={handleAddBlog}>
         <div>
-          <span>title </span>
-          <input
-            type="title"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
+          <label htmlFor="title">
+            title
+            <input
+              id="title"
+              type="text"
+              value={title}
+              name="Title"
+              onChange={({ target }) => setTitle(target.value)}
+            />
+          </label>
         </div>
         <div>
-          <span>author </span>
-          <input
-            type="author"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
+          <label htmlFor="author">
+            author
+            <input
+              id="author"
+              type="text"
+              value={author}
+              name="Author"
+              onChange={({ target }) => setAuthor(target.value)}
+            />
+          </label>
         </div>
         <div>
-          <span>url </span>
-          <input
-            type="url"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
+          <label htmlFor="url">
+            url
+            <input
+              id="url"
+              type="text"
+              value={url}
+              name="Url"
+              onChange={({ target }) => setUrl(target.value)}
+            />
+          </label>
         </div>
         <button type="submit">Create</button>
       </form>
